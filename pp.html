@@ -1,0 +1,45 @@
+<html>
+<head>
+<script type="text/javascript" src="http://127.0.0.1:8080/socket.io/socket.io.js"></script> 
+<script type="text/javascript">
+
+// -------------------------------------------------------------
+
+
+var socket = new io.Socket('127.0.0.1', {port: 8080, rememberTransport: false});
+/* var socket = new io.Socket(null, {port: 8080, rememberTransport: false}); */
+
+// -------------------------------------------------------------
+
+// doesn't work:
+//var socket = new io.Socket();
+//var socket = new io.Socket(null);
+//var socket = new io.Socket('127.0.0.1');
+/* var socket = new io.Socket('127.0.0.1:8080'); */
+
+// -------------------------------------------------------------
+
+socket.connect();
+
+socket.send('client says: HI!');
+
+socket.on('connect', function(){
+	socket.send('client says: connected!');
+}) 
+
+socket.on('message', function(data){
+	alert('client says: message is ' + data);
+}) 
+
+socket.on('disconnect', function(){
+	alert('client says: disconnect');
+}) 
+
+// -------------------------------------------------------------
+
+</script> 
+</head>
+<body>
+pp
+</body>
+</html>
