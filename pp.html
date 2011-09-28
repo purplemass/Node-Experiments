@@ -6,8 +6,10 @@
 // -------------------------------------------------------------
 
 
-var socket = new io.Socket('127.0.0.1', {port: 8080, rememberTransport: false});
-/* var socket = new io.Socket(null, {port: 8080, rememberTransport: false}); */
+WEB_SOCKET_SWF_LOCATION = 'http://127.0.0.1:8080/socket.io/WebSocketMain.swf';
+
+/* var socket = new io.Socket('127.0.0.1', {port: 8080, rememberTransport: false}); */
+var socket = new io.Socket(null, {port: 8080, rememberTransport: false});
 
 // -------------------------------------------------------------
 
@@ -19,27 +21,52 @@ var socket = new io.Socket('127.0.0.1', {port: 8080, rememberTransport: false});
 
 // -------------------------------------------------------------
 
-socket.connect();
+function connect() {
+	socket.connect();
+}
 
-socket.send('client says: HI!');
+function disconnect() {
+	socket.disconnect();
+}
+
+function say_hi(){
+	socket.send('CLIENT: hi!');
+}
 
 socket.on('connect', function(){
-	socket.send('client says: connected!');
+	socket.send('CLIENT: connected!');
 }) 
 
 socket.on('message', function(data){
-	alert('client says: message is ' + data);
+	log('[message]' + data);
 }) 
 
+/*
+socket.on('bob', function(data){
+	console.log('client says: bob is ' + data);
+}) 
+*/
+
 socket.on('disconnect', function(){
-	alert('client says: disconnect');
+	log('disconnect');
 }) 
 
 // -------------------------------------------------------------
 
+function log(msg){
+	console.log('CLIENT: ' + msg);
+}
+
+// -------------------------------------------------------------
+
+
 </script> 
 </head>
 <body>
-pp
+<a href="#" onClick="connect()">Connect</a>
+<br />
+<a href="#" onClick="disconnect()">Disconnect</a>
+<br />
+<a href="#" onClick="say_hi()">Say Hi()</a>
 </body>
 </html>
